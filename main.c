@@ -35,7 +35,7 @@ int startTest(FILE *fptr) {
   }
 
   printf(ANSI_COLOR_RED "TEXT: " ANSI_COLOR_RESET);
-  printf("%s", originalText);
+  printf("%s\n", originalText);
   char *text = malloc(sizeof(text) * originalTextLen);
   printf(ANSI_COLOR_GREEN "TYPE HERE: " ANSI_COLOR_RESET);
 
@@ -45,12 +45,12 @@ int startTest(FILE *fptr) {
   scanf(" %[^\n]", text);
   inputEnd = time(NULL);
   userInputTime = inputEnd - inputStart;
-  double userInputTimeInMinutes = userInputTime / 60.0;
+  float userInputTimeInMinutes = userInputTime / 60.0;
   
   inputTextLen = strlen(text);
   originalTextLen = strlen(originalText) - 2;
 
-  // go through inputted text and count incorrect words
+  // go through inputted text and count incorrect entries
   char *token = strtok(text, " ");
   while (token != NULL) {
     inputTextLenWords++;
@@ -60,9 +60,13 @@ int startTest(FILE *fptr) {
     token = strtok(NULL, " ");
   }
 
-  double grossWPM = (inputTextLen / 5.0) / userInputTimeInMinutes;
-  double netWPM = ((inputTextLen / 5.0) - incorrectWords) /  userInputTimeInMinutes;
-  printf(ANSI_COLOR_BLUE "Your gross WPM is: %f and net WPM is: %f\n" ANSI_COLOR_RESET, grossWPM, netWPM);
+  // do calculations for WPM here
+  int temp = inputTextLen / 5;
+  float errorRate = (float)incorrectWords / userInputTimeInMinutes;
+  float grossWPM = temp / userInputTimeInMinutes;
+  float netWPM = grossWPM - errorRate;
+  float accuracy = ((inputTextLen - (float)incorrectWords) / originalTextLen ) * 100;
+  printf(ANSI_COLOR_BLUE "GROSS WPM = %.2f\nNET WPM = %.2f\nACCURACY = %.2f%%\n" ANSI_COLOR_RESET, grossWPM, netWPM, accuracy);
 
   fclose(fptr);
   free(originalText);
