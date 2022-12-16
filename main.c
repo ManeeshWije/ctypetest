@@ -79,4 +79,5 @@ int main(int argc, char *argv[]) {
   printf(ANSI_COLOR_BLUE "Enter the name of a text file: " ANSI_COLOR_RESET);
   scanf("%s", option);
   startTest(readFile(option));
+  free(option);
 }
