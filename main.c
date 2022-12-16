@@ -3,11 +3,15 @@
 FILE *readFile(char *filename) {
   char ch;
   FILE *fptr;
-
-  if ((fptr = fopen(filename, "r")) == NULL) {
+  char *newFilename = malloc(sizeof(filename) + 128);
+  strcpy(newFilename, "tests/");
+  strcat(newFilename, filename);
+  if ((fptr = fopen(newFilename, "r")) == NULL) {
     printf("Error! opening file");
+    free(newFilename);
     exit(1);
   }
+  free(newFilename);
   return fptr;
 }
 
