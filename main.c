@@ -65,7 +65,7 @@ int startTest(FILE *fptr) {
   }
 
   // do calculations for WPM here
-  int temp = inputTextLen / 5;
+  float temp = inputTextLen / 5.0;
   float errorRate = (float)incorrectWords / userInputTimeInMinutes;
   float grossWPM = temp / userInputTimeInMinutes;
   float netWPM = grossWPM - errorRate;
